@@ -4,3 +4,6 @@ Repositorio de Git para el trabajo de la primera unidad de Algebra Lineal. Semes
 ## Colaboracion
 Pueden mandarme el codigo por whatsapp o si quieren pueden aprender a usar git y 
 de esa forma colaborar con el proyecto, cualquiera esta bien para mi.
+
+## Scuffed tutorials
+pending to do...
