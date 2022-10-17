@@ -88,6 +88,9 @@ function Matriz.getTraspuesta( m )
     return Matriz.new(tras)
 end
 
+function Matriz.getEscalonada( m )
+    -- definir esta funcion team.
+
 
 -- OPERACIONES ENTRE MATRICES
 function Matriz.mt.__add (m1, m2)
