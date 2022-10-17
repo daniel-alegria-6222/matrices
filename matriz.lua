@@ -90,6 +90,7 @@ end
 
 function Matriz.getEscalonada( m )
     -- definir esta funcion team.
+    
 end
 
 -- OPERACIONES ENTRE MATRICES
