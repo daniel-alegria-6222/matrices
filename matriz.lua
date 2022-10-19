@@ -14,6 +14,8 @@ function Matriz.new( arr )
 
     return this
 end
+
+-- IMPRIMIR MATRICES
 function Matriz.mt.__tostring(m)
     local str = ""
     for i = 1, m.i, 1 do
@@ -39,62 +41,6 @@ function Matriz.mt.__eq (m1, m2)
     return true
 end
 
--- MATRICES NOTABLES
-function Matriz.ESCALAR(lenij, n)
-    local escalar = {}
-    for i=1, lenij do
-        escalar[i] = {}
-        for j=1, lenij do
-            if i == j then elem = n
-            else elem = 0 end
-            escalar[i][j] = elem
-        end
-    end
-    return Matriz.new(escalar)
-end
-
-function Matriz.IDENTIDAD(lenij)
-    return Matriz.ESCALAR(lenij, 1)
-end
-
-function Matriz.NULA(leni, lenj)
-    if leni == nil then return nil end
-    local lenj = lenj or leni
-
-    local nula = {}
-    for i=1, leni do
-        nula[i] = {}
-        for j=1, lenj do
-            nula[i][j] = 0
-        end
-    end
-    return Matriz.new(nula)
-end
-
--- MATRICES DERIVADAS
-function Matriz.getTraza( m )
-    -- TODO
-end
-
-function Matriz.getTraspuesta( m )
-    local tras = {}
-    for j=1, m.j do
-        tras[j] = {}
-        for i=1, m.i do
-            -- elem = m.arr[i][j] == 0 and 0 or 1
-            elem = m.arr[i][j]
-            tras[j][i] = elem
-        end
-    end
-    return Matriz.new(tras)
-end
-
-function Matriz.getEscalonada( m )
-    -- definir esta funcion team.
-    
-end
-
--- OPERACIONES ENTRE MATRICES
 function Matriz.mt.__add (m1, m2)
     if type(m1) == "number" or type(m2) == "number" then
         error("Can't add matriz with number")
@@ -227,14 +173,9 @@ function Matriz.NULA(leni, lenj)
     return Matriz.new(nula)
 end
 
--- MATRICES DERIVADAS ?
+-- COSAS QUE SE OBTIENEN DE UNA MATRIZ
 function Matriz.getTraza( m )
-    if m.i ~= m.j then return nil end
-    local suma = 0
-    for n=1, m.i do
-        suma = suma + m.arr[n][n]
-    end
-    return suma
+    -- TODO
 end
 
 function Matriz.getTraspuesta( m )
@@ -254,7 +195,28 @@ function Matriz.getConjugada( m )
     -- TODO: um, creo que solo yo podria implemetar esta funcion, requiere modulo 'imaginario'
 end
 
---- PROPIEDADES DE UNA MATRIZ
+function Matriz.getEscalonada( m )
+    -- TODO: definir esta funcion team.
+end
+
+function Matriz.getRango( m )
+    -- TODO: implementar esta funcion usando el modulo getEscalonada y la teoria
+end
+
+function Matriz.getInversaGauss( m )
+    -- TODO: implementar esta funcion usando el modulo getEscalonada y la teoria
+end
+
+function Matriz.getDeterminante( m )
+    -- TODO: implementar esta funcion
+end
+
+function Matriz.getInversaDeterminante( m )
+    -- TODO: implementar esta funcion usando el modulo getDeterminante y la teoria
+end
+
+
+--- PROPIEDADES DE UNA MATRIZ (devuelven un bool)
 function Matriz.esSimetrica( m )
     if m.i ~= m.j then return false end
     ---- otra forma de hallar si es simetrica
@@ -328,6 +290,11 @@ end
 
 function Matriz.esHermitiana( m )
     return m:esAutoadjunta()
+end
+
+function Matriz.esOrtogonal( m )
+    if m.i ~= m.j then return false end
+    return m:getInversa() == m:getTraspuesta()
 end
 
 --- CERRADURA
