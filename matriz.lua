@@ -204,14 +204,17 @@ function Matriz.getRango( m )
 end
 
 function Matriz.getInversaGauss( m )
+    if m.i ~= m.j then return nil end
     -- TODO: implementar esta funcion usando el modulo getEscalonada y la teoria
 end
 
 function Matriz.getDeterminante( m )
+    if m.i ~= m.j then return nil end
     -- TODO: implementar esta funcion
 end
 
 function Matriz.getInversaDeterminante( m )
+    if m.i ~= m.j then return nil end
     -- TODO: implementar esta funcion usando el modulo getDeterminante y la teoria
 end
 
