@@ -30,6 +30,70 @@ function Matriz.mt.__tostring(m)
     return str .. ""
 end
 
+-- FUNCIONES UTILES
+function Matriz.sumarRow( m, i )
+    if i < 1 or i > m.i then return nil end
+    local sum = 0
+    for j=1, m.j do
+        sum = sum + m.arr[i][j]
+    end
+    return sum
+end
+
+function Matriz.sumarCol( m, j )
+    if j < 1 or j > m.j then return nil end
+    local sum = 0
+    for i=1, m.i do
+        sum = sum + m.arr[i][j]
+    end
+    return sum
+end
+
+function Matriz.sumarTodo( m )
+    local sum = 0
+    for i=1, m.i do
+        for j=1, m.j do
+            sum = sum + m.arr[i][j]
+        end
+    end
+    return sum
+end
+
+function Matriz.esDivisibleRow( m, i, num )
+    -- checkea si una fila 'i' es divisible por un numero 'num'
+    if i < 1 or i > m.i or num == 0 then return nil end
+    for j=1, m.j do
+        if m.arr[i][j] % num ~= 0 then return false end
+    end
+    return true
+end
+
+function Matriz.esDivisibleCol( m, j, num )
+    -- checkea si una columna 'j' es divisible por un numero 'num'
+    if j < 1 or j > m.j or num == 0 then return nil end
+    for i=1, m.i do
+        if m.arr[i][j] % num ~= 0 then return false end
+    end
+    return true
+end
+
+function Matriz.swapRow( m, r1, r2 )
+    if r1 == r2 then return end
+    local _r1 = m.arr[r1]
+    m.arr[r1] = r2
+    m.arr[r1] = _r1
+end
+
+function Matriz.swapCol( m, c1, c2 )
+    if r1 == r2 then return end
+    local temp
+    for i=1, m.i do
+        temp = m.arr[i][c1]
+        m.arr[i][c1] = m.arr[i][c2]
+        m.arr[i][c2] = temp
+    end
+end
+
 -- OPERACIONES ENTRE MATRICES
 function Matriz.mt.__eq (m1, m2)
     if m1.i ~= m2.i or m1.j ~= m2.j then return false end
@@ -140,7 +204,6 @@ function Matriz.mt.__pow (m, n)
     return new_m
 end
 
-
 -- MATRICES NOTABLES
 function Matriz.ESCALAR(lenij, n)
     local escalar = {}
@@ -175,7 +238,12 @@ end
 
 -- COSAS QUE SE OBTIENEN DE UNA MATRIZ
 function Matriz.getTraza( m )
-    -- TODO
+    if m.i ~= m.j then return nil end
+    local sum = 0
+    for n=1, m.i do
+        sum = sum + m.arr[n][n]
+    end
+    return sum
 end
 
 function Matriz.getTraspuesta( m )
@@ -192,11 +260,26 @@ function Matriz.getTraspuesta( m )
 end
 
 function Matriz.getConjugada( m )
-    -- TODO: um, creo que solo yo podria implemetar esta funcion, requiere modulo 'imaginario'
+    -- TODO: No urgente. Um, creo que solo yo podria implemetar esta funcion, requiere modulo 'imaginario'
 end
 
 function Matriz.getEscalonada( m )
-    -- TODO: definir esta funcion team.
+    -- TODO: arreglar este desastre completamente
+    local new_m = m
+    local elem, guia_n
+
+    local j = 1
+    while j <= m.j do
+        if guia == nil then
+            for i=1, m.i do
+                elem = m.arr[i][j]
+                if elem == 1 then
+                    guia_n = i
+            end
+        else j = j + 1 end
+    end
+
+    return new_m
 end
 
 function Matriz.getRango( m )
@@ -308,7 +391,6 @@ function Matriz.esNilpotente( m , i )
 end
 
 function Matriz.esPeriodica( m , i )
-    -- TODO: function is incomplete, it needs ot be reworked thoroughly
     if m.i ~= m.j then return false end
 
     if i ~= nil then return m^(i+1) == m and i or nil end
