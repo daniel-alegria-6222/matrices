@@ -133,8 +133,8 @@ function Matriz.mt.__pow (m, n)
     elseif n < 0 then
         error("Can't elevate, index has to be >= 1")
     end
-    local new_m = 1
-    for i=1, n do
+    local new_m = m
+    for i=1, n-1 do
         new_m = new_m * m
     end
     return new_m
@@ -296,28 +296,32 @@ function Matriz.esNilpotente( m , i )
 
     if i ~= nil then return m^i == nula and i or nil end
 
-    local i = 0
-    while true do
+    local i = 1
+    while i < 100 do
         if m^i == nula then
             return i
         end
         i = i + 1
     end
+
+    return nil
 end
 
 function Matriz.esPeriodica( m , i )
     -- TODO: function is incomplete, it needs ot be reworked thoroughly
     if m.i ~= m.j then return false end
 
-    if i ~= nil then return m^i == nula and i or nil end
+    if i ~= nil then return m^(i+1) == m and i or nil end
 
-    local i = 0
-    while true do
+    local i = 1
+    while i < 100 do
         if m^(i+1) == m then
             return i
         end
         i = i + 1
     end
+
+    return nil
 end
 
 function Matriz.esAutoadjunta( m )
