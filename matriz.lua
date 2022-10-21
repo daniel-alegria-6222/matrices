@@ -276,7 +276,7 @@ function Matriz.esSimetrica( m )
 end
 
 function Matriz.esAntisimetrica( m )
-    -- TODO: write this function
+    return m == -m:getTraspuesta()
 end
 
 function Matriz.esIdempotente( m )
