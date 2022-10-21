@@ -203,7 +203,7 @@ function Matriz.getRango( m )
     -- TODO: implementar esta funcion usando el modulo getEscalonada y la teoria
 end
 
-function Matriz.getInversaGauss( m )
+function Matriz.getInversaPorGauss( m )
     if m.i ~= m.j then return nil end
     -- TODO: implementar esta funcion usando el modulo getEscalonada y la teoria
 end
@@ -213,9 +213,43 @@ function Matriz.getDeterminante( m )
     -- TODO: implementar esta funcion
 end
 
-function Matriz.getInversaDeterminante( m )
+function Matriz.getInversaPorAdjunta( m )
     if m.i ~= m.j then return nil end
     -- TODO: implementar esta funcion usando el modulo getDeterminante y la teoria
+end
+
+Matriz.getInversa = Matriz.getInversaPorAdjunta
+
+function Matriz.getMenorComplementario( m, i, j )
+    if m.i ~= m.j then return nil end
+    -- TODO: implementar esta funcion usando la teoria
+end
+
+function Matriz.getCofactor( m, i, j )
+    if m.i ~= m.j then return nil end
+    return ( -1 ) ^ ( (i+j)%2 ) * m:getMenorComplementario(i,j)
+end
+
+function Matriz.getDeterminantePorCofactores( m )
+    -- TODO: No urgente, implementar esta funcion usando la teoria
+end
+
+function Matriz.getMatrizDeCofactores( m )
+    if m.i ~= m.j then return nil end
+
+    local new_t = {}
+    for i=1, #m.i do
+        new_t[i] = {}
+        for j=1, #m.j do
+            new_t[i][j] = m:getCofactor(i,j)
+        end
+    end
+
+    return Matriz.new(new_t)
+end
+
+function Matriz.getAdjunta( m )
+    return m:getMatrizDeCofactores():getTraspuesta()
 end
 
 
@@ -298,6 +332,11 @@ end
 function Matriz.esOrtogonal( m )
     if m.i ~= m.j then return false end
     return m:getInversa() == m:getTraspuesta()
+end
+
+function Matriz.esSingular( m )
+    if m.i ~= m.j then return false end
+    return m:getDeterminante() == 0
 end
 
 --- CERRADURA
