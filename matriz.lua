@@ -63,7 +63,7 @@ function Matriz.contarCeroRows( m )
     -- contar las filas con solo ceros
     local count = 0
     for i=1, m.i do
-        if utl.countTable( m.arr[i] ) == 0 then count = count + 1 end
+        if utl.sumTable( m.arr[i] ) == 0 then count = count + 1 end
     end
     return count
 end
@@ -327,7 +327,10 @@ end
 
 function Matriz.getInversaPorAdjunta( m )
     if m.i ~= m.j then return nil end
-    return ( 1 / m:getDeterminante() ) * m:getAdjunta()
+    local determinante = m:getDeterminante()
+    if determinante ~= 0 then
+        return ( 1 / determinante ) * m:getAdjunta()
+    end
 end
 
 Matriz.getInversa = Matriz.getInversaPorAdjunta
